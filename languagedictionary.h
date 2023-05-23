@@ -9,7 +9,9 @@ class LanguageDictionary : public QObject
 {
     Q_OBJECT
 public:
-    explicit LanguageDictionary(QObject *parent = nullptr);
+    explicit LanguageDictionary(QObject *parent, const QString& name);
+
+    const QString& getLanguageName() const;
 
 private:
     QString m_language_name;

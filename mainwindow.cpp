@@ -52,13 +52,13 @@ MainWindow::MainWindow(QWidget *parent)
     ui->addWordButton->setDefaultAction(ui->actionAdd_word);
     QObject::connect(ui->actionAdd_word, &QAction::triggered,
                      this, [=](){
-                         AddWordWindow w(this);
+                         AddWordWindow w(this, m_database_content);
                          w.exec();
                      });
 
     QObject::connect(ui->actionManage_languages, &QAction::triggered,
                      this, [=](){
-                        ManageLanguagesWindow w(this);
+                        ManageLanguagesWindow w(this, m_database_content);
                         w.exec();
                     });
 
