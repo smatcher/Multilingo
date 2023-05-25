@@ -3,7 +3,7 @@
 
 #include "addwordwindow.h"
 #include "managelanguageswindow.h"
-#include "wordcategoriesmodel.h"
+#include "wordcollectionmodel.h"
 
 #include <QCloseEvent>
 #include <QInputDialog>
@@ -17,37 +17,37 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
     m_database_content = new DatabaseContent(this);
+    
+    WordCollectionModel* collections_model = new WordCollectionModel(this, m_database_content);
 
-    WordCategoriesModel* categories_model = new WordCategoriesModel(this, m_database_content);
-
-    auto addCategory = [=]() {
+    auto addCollection = [=]() {
         bool ok;
-        QString categoryName = QInputDialog::getText(this, "Add category", "Category name:", QLineEdit::Normal, "New Category", &ok);
-        if (ok && !categoryName.isEmpty()) {
-            categories_model->addCategory(categoryName);
+        QString collectionName = QInputDialog::getText(this, "Add collection", "Collection name:", QLineEdit::Normal, "New Collection", &ok);
+        if (ok && !collectionName.isEmpty()) {
+            collections_model->addCollection(collectionName);
         }
     };
 
-    auto removeSelectedCategories = [=]() {
-        auto selected_indices = ui->categoriesList->selectionModel()->selection().indexes();
+    auto removeSelectedCollections = [=]() {
+        auto selected_indices = ui->collectionsList->selectionModel()->selection().indexes();
         if (!selected_indices.isEmpty()) {
-            QString msgbox_question = QString("Are you sure that you want to remove %1 %2?")
+            QString msgbox_question = QString("Are you sure that you want to remove %1 %2?\nWords in the collection will not be removed.")
                                           .arg(selected_indices.count())
-                                          .arg(selected_indices.count() == 1 ? "category" : "categories");
-            if (QMessageBox::question(this, "Remove category", msgbox_question) == QMessageBox::StandardButton::Yes) {
-                categories_model->removeCategories(selected_indices);
+                                          .arg(selected_indices.count() == 1 ? "collection" : "collections");
+            if (QMessageBox::question(this, "Remove collection", msgbox_question) == QMessageBox::StandardButton::Yes) {
+                collections_model->removeCollections(selected_indices);
             }
         }
     };
 
-    ui->categoriesList->setModel(categories_model);
-    ui->addCategoryButton->setDefaultAction(ui->actionAdd_category);
+    ui->collectionsList->setModel(collections_model);
+    ui->addCollectionButton->setDefaultAction(ui->actionAdd_collection);
+    
+    QObject::connect(ui->actionAdd_collection, &QAction::triggered, this, addCollection);
+    QObject::connect(ui->removeCollectionButton, &QPushButton::clicked, this, removeSelectedCollections );
 
-    QObject::connect(ui->actionAdd_category, &QAction::triggered, this, addCategory);
-    QObject::connect(ui->removeCategoryButton, &QPushButton::clicked, this, removeSelectedCategories);
-
-    QShortcut* removeCategoryShortcut = new QShortcut(QKeySequence(Qt::Key_Delete), ui->categoriesList);
-    QObject::connect(removeCategoryShortcut, &QShortcut::activated, this, removeSelectedCategories);
+    QShortcut* removeCollectionShortcut = new QShortcut(QKeySequence(Qt::Key_Delete), ui->collectionsList);
+    QObject::connect(removeCollectionShortcut, &QShortcut::activated, this, removeSelectedCollections );
 
     ui->addWordButton->setDefaultAction(ui->actionAdd_word);
     QObject::connect(ui->actionAdd_word, &QAction::triggered,

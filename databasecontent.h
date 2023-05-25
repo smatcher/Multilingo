@@ -2,7 +2,7 @@
 #define DATABASECONTENT_H
 
 #include "languagedictionary.h"
-#include "wordscategory.h"
+#include "wordcollection.h"
 
 #include <QList>
 
@@ -17,12 +17,12 @@ public:
     bool isTouched();
 
 public:
-    QList<WordsCategory*>& getCategories();
+    QList<WordCollection*>& getCollections();
     QList<LanguageDictionary*>& getLanguages();
 
 private:
     QList<LanguageDictionary*> m_languages;
-    QList<WordsCategory*> m_categories;
+    QList<WordCollection*> m_collections;
     qint64 m_next_index;
 
     bool m_touched;

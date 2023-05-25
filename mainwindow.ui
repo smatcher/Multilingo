@@ -28,7 +28,7 @@
      <number>0</number>
     </property>
     <item>
-     <widget class="QWidget" name="categoriesWidget" native="true">
+     <widget class="QWidget" name="collectionsWidget" native="true">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
         <horstretch>0</horstretch>
@@ -52,16 +52,16 @@
            <number>0</number>
           </property>
           <item>
-           <widget class="QToolButton" name="addCategoryButton">
+           <widget class="QToolButton" name="addCollectionButton">
             <property name="text">
-             <string>Add Category</string>
+             <string>Add Collection</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="removeCategoryButton">
+           <widget class="QPushButton" name="removeCollectionButton">
             <property name="text">
-             <string>Remove Category</string>
+             <string>Remove Collection</string>
             </property>
            </widget>
           </item>
@@ -82,7 +82,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QListView" name="categoriesList">
+        <widget class="QListView" name="collectionsList">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
            <horstretch>0</horstretch>
@@ -183,7 +183,7 @@
     </property>
     <addaction name="actionManage_languages"/>
     <addaction name="actionAdd_word"/>
-    <addaction name="actionAdd_category"/>
+    <addaction name="actionAdd_collection"/>
     <addaction name="actionSave"/>
     <addaction name="separator"/>
     <addaction name="actionExit"/>
@@ -212,9 +212,9 @@
     <string>Ctrl+N</string>
    </property>
   </action>
-  <action name="actionAdd_category">
+  <action name="actionAdd_collection">
    <property name="text">
-    <string>Add category</string>
+    <string>Add collection</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+B</string>

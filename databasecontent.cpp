@@ -23,9 +23,9 @@ bool DatabaseContent::isTouched()
     return m_touched;
 }
 
-QList<WordsCategory*>& DatabaseContent::getCategories()
+QList<WordCollection*>& DatabaseContent::getCollections()
 {
-    return m_categories;
+    return m_collections;
 }
 
 QList<LanguageDictionary*>& DatabaseContent::getLanguages()

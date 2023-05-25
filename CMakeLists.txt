@@ -27,12 +27,12 @@ set(PROJECT_SOURCES
         wordentry.cpp
         databasecontent.h
         databasecontent.cpp
-        wordscategory.h
-        wordscategory.cpp
+        wordcollection.h
+        wordcollection.cpp
         languagedictionary.h
         languagedictionary.cpp
-        wordcategoriesmodel.h
-        wordcategoriesmodel.cpp
+        wordcollectionmodel.h
+        wordcollectionmodel.cpp
         wordsmodel.h
         wordsmodel.cpp
 )
