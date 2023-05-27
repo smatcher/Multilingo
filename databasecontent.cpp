@@ -32,3 +32,17 @@ QList<LanguageDictionary*>& DatabaseContent::getLanguages()
 {
     return m_languages;
 }
+
+QMap<qint64, CommonWordEntry*>& DatabaseContent::getWords()
+{
+    return m_words;
+}
+
+quint64 DatabaseContent::addWord(CommonWordEntry* common_word_entry)
+{
+    qint64 index = m_next_index++;
+    m_words.insert(index, common_word_entry);
+    common_word_entry->setParent(this);
+    touch();
+    return index;
+}

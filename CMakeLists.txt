@@ -35,6 +35,11 @@ set(PROJECT_SOURCES
         wordcollectionmodel.cpp
         wordsmodel.h
         wordsmodel.cpp
+        wordentrywidget.h
+        wordentrywidget.cpp
+        wordentrywidget.ui
+        commonwordentry.h
+        commonwordentry.cpp
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

@@ -17,9 +17,14 @@ public:
     explicit AddWordWindow(QWidget *parent, DatabaseContent* database_content);
     ~AddWordWindow();
 
+public slots:
+    void accept();
+
 private:
     Ui::AddWordWindow *ui;
     DatabaseContent* m_database_content;
+    QList<WordEntry*> m_word_entries;
+    CommonWordEntry* m_common_word_entry;
 };
 
 #endif // ADDWORDWINDOW_H

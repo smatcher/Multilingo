@@ -4,26 +4,27 @@
 #include <QObject>
 #include <QString>
 
-enum class WordType {
-    None,
-    Verb,
-    Noun,
-    Adjective,
-    Adverb,
-    Determiner
-};
-
 class WordEntry : public QObject
 {
     Q_OBJECT
 public:
     explicit WordEntry(QObject *parent = nullptr);
 
+    bool hasData() const;
+
+    void setValue(const QString& value_);
+    const QString& value() const;
+
+    void setDisambiguation(const QString& disambiguation_);
+    const QString& disambiguation() const;
+
+    void setDetails(const QString& details_);
+    const QString& details() const;
+
 private:
     QString m_value;
     QString m_disambiguation;
     QString m_details;
-    WordType m_type;
 
 signals:
 

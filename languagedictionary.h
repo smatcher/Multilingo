@@ -12,6 +12,7 @@ public:
     explicit LanguageDictionary(QObject *parent, const QString& name);
 
     const QString& getLanguageName() const;
+    void addWord(qint64 word_index, WordEntry* word_entry);
 
 private:
     QString m_language_name;

@@ -2,5 +2,39 @@
 
 WordEntry::WordEntry(QObject *parent)
     : QObject{parent}
-    , m_type(WordType::None)
 {}
+
+bool WordEntry::hasData() const
+{
+    return !m_value.isEmpty() || !m_disambiguation.isEmpty() || !m_details.isEmpty();
+}
+
+void WordEntry::setValue(const QString& value_)
+{
+    m_value = value_;
+}
+
+const QString& WordEntry::value() const
+{
+    return m_value;
+}
+
+void WordEntry::setDisambiguation(const QString& disambiguation_)
+{
+    m_disambiguation = disambiguation_;
+}
+
+const QString& WordEntry::disambiguation() const
+{
+    return m_disambiguation;
+}
+
+void WordEntry::setDetails(const QString& details_)
+{
+    m_details = details_;
+}
+
+const QString& WordEntry::details() const
+{
+    return m_details;
+}
