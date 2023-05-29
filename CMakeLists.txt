@@ -40,6 +40,8 @@ set(PROJECT_SOURCES
         wordentrywidget.ui
         commonwordentry.h
         commonwordentry.cpp
+        dictionarymodel.h
+        dictionarymodel.cpp
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

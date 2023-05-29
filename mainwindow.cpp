@@ -2,6 +2,7 @@
 #include "./ui_mainwindow.h"
 
 #include "addwordwindow.h"
+#include "dictionarymodel.h"
 #include "managelanguageswindow.h"
 #include "wordcollectionmodel.h"
 
@@ -64,6 +65,11 @@ MainWindow::MainWindow(QWidget *parent)
 
     QObject::connect(ui->actionSave, &QAction::triggered, this, &MainWindow::saveDatabase);
     QObject::connect(ui->actionExit, &QAction::triggered, this, &QMainWindow::close);
+
+    DictionaryModel* dictionary_model = new DictionaryModel(this, m_database_content);
+    ui->wordsTable->setModel(dictionary_model);
+
+    QObject::connect(m_database_content, &DatabaseContent::touched, dictionary_model, &DictionaryModel::tempInvalidate);
 
     if (m_database_content->getLanguages().isEmpty()) {
         ui->actionManage_languages->trigger();

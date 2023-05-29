@@ -13,6 +13,7 @@ public:
 
     const QString& getLanguageName() const;
     void addWord(qint64 word_index, WordEntry* word_entry);
+    WordEntry* findWord(qint64 word_index);
 
 private:
     QString m_language_name;

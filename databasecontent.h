@@ -18,12 +18,16 @@ public:
     void untouch();
     bool isTouched();
 
-    quint64 addWord(CommonWordEntry* common_word_entry);
+    qint64 addWord(CommonWordEntry* common_word_entry);
+    qint64 numWordIndices() const;
 
-public:
     QList<WordCollection*>& getCollections();
     QList<LanguageDictionary*>& getLanguages();
     QMap<qint64, CommonWordEntry*>& getWords();
+
+signals:
+    void touched();
+    void untouched();
 
 private:
     QList<LanguageDictionary*> m_languages;

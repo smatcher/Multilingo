@@ -38,3 +38,11 @@ const QString& WordEntry::details() const
 {
     return m_details;
 }
+
+QString WordEntry::toString() const
+{
+    if (m_disambiguation.isEmpty())
+        return m_value;
+
+    return QString("%1 (%2)").arg(m_value, m_disambiguation);
+}

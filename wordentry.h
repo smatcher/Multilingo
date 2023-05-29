@@ -21,6 +21,8 @@ public:
     void setDetails(const QString& details_);
     const QString& details() const;
 
+    QString toString() const;
+
 private:
     QString m_value;
     QString m_disambiguation;
