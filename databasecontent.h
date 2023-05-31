@@ -18,12 +18,17 @@ public:
     void untouch();
     bool isTouched();
 
-    qint64 addWord(CommonWordEntry* common_word_entry);
-    qint64 numWordIndices() const;
+    void save();
 
-    QList<WordCollection*>& getCollections();
-    QList<LanguageDictionary*>& getLanguages();
-    QMap<qint64, CommonWordEntry*>& getWords();
+private:
+    friend class DictionaryModel;
+    friend class WordCollectionModel;
+
+    void addWord(CommonWordEntry* common_word_entry);
+
+    QList<WordCollection*>& collections();
+    QList<LanguageDictionary*>& languages();
+    QList<CommonWordEntry*>& words();
 
 signals:
     void touched();
@@ -32,8 +37,7 @@ signals:
 private:
     QList<LanguageDictionary*> m_languages;
     QList<WordCollection*> m_collections;
-    QMap<qint64, CommonWordEntry*> m_words;
-    qint64 m_next_index;
+    QList<CommonWordEntry*> m_words;
 
     bool m_touched;
 };

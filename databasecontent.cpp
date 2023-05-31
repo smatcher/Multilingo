@@ -2,7 +2,6 @@
 
 DatabaseContent::DatabaseContent(QObject *parent)
     : QObject{parent}
-    , m_next_index(0)
     , m_touched(false)
 {
 
@@ -25,31 +24,29 @@ bool DatabaseContent::isTouched()
     return m_touched;
 }
 
-QList<WordCollection*>& DatabaseContent::getCollections()
+QList<WordCollection*>& DatabaseContent::collections()
 {
     return m_collections;
 }
 
-QList<LanguageDictionary*>& DatabaseContent::getLanguages()
+QList<LanguageDictionary*>& DatabaseContent::languages()
 {
     return m_languages;
 }
 
-QMap<qint64, CommonWordEntry*>& DatabaseContent::getWords()
+QList<CommonWordEntry*>& DatabaseContent::words()
 {
     return m_words;
 }
 
-qint64 DatabaseContent::addWord(CommonWordEntry* common_word_entry)
+void DatabaseContent::addWord(CommonWordEntry* common_word_entry)
 {
-    qint64 index = m_next_index++;
-    m_words.insert(index, common_word_entry);
+    m_words.push_back(common_word_entry);
     common_word_entry->setParent(this);
     touch();
-    return index;
 }
 
-qint64 DatabaseContent::numWordIndices() const
+void DatabaseContent::save()
 {
-    return m_next_index;
+    untouch();
 }

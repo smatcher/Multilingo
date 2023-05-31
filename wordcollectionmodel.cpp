@@ -11,12 +11,12 @@ WordCollectionModel::WordCollectionModel(QObject *parent, DatabaseContent* datab
 
 int WordCollectionModel::rowCount(const QModelIndex& index) const
 {
-    return m_database_content->getCollections().count();
+    return m_database_content->collections().count();
 }
 
 QVariant WordCollectionModel::data(const QModelIndex& index, int role) const
 {
-    const auto& collections = m_database_content->getCollections();
+    const auto& collections = m_database_content->collections();
 
     if (!index.isValid())
         return QVariant();
@@ -32,9 +32,9 @@ QVariant WordCollectionModel::data(const QModelIndex& index, int role) const
 
 void WordCollectionModel::addCollection(QString collectionName)
 {
-    auto& collections = m_database_content->getCollections();
+    auto& collections = m_database_content->collections();
 
-    beginInsertRows(QModelIndex(), collections.count(), collections.count() + 1);
+    beginInsertRows(QModelIndex(), collections.count(), collections.count());
     collections.push_back(new WordCollection(parent(), collectionName));
     endInsertRows();
 
@@ -56,7 +56,7 @@ void WordCollectionModel::removeCollections(const QModelIndexList& collectionsTo
     std::reverse(indicesToRemove.begin(), indicesToRemove.end());
 
     beginResetModel();
-    auto& collections = m_database_content->getCollections();
+    auto& collections = m_database_content->collections();
     for (int index : indicesToRemove) {
         collections.removeAt(index);
     }

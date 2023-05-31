@@ -1,7 +1,7 @@
 #ifndef MANAGELANGUAGESWINDOW_H
 #define MANAGELANGUAGESWINDOW_H
 
-#include "databasecontent.h"
+#include "dictionarymodel.h"
 
 #include <QDialog>
 #include <QStringListModel>
@@ -15,7 +15,7 @@ class ManageLanguagesWindow : public QDialog
     Q_OBJECT
 
 public:
-    explicit ManageLanguagesWindow(QWidget *parent, DatabaseContent* database_content);
+    explicit ManageLanguagesWindow(QWidget *parent, DictionaryModel* dictionary_model);
     ~ManageLanguagesWindow();
 
 public slots:
@@ -23,7 +23,7 @@ public slots:
 
 private:
     Ui::ManageLanguagesWindow *ui;
-    DatabaseContent* m_database_content;
+    DictionaryModel* m_dictionary_model;
     QStringListModel* m_language_list_model;
 };
 

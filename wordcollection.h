@@ -1,6 +1,8 @@
 #ifndef WORDCOLLECTION_H
 #define WORDCOLLECTION_H
 
+#include "commonwordentry.h"
+
 #include <QObject>
 #include <QString>
 #include <QSet>
@@ -15,7 +17,7 @@ public:
 
 private:
     QString m_name;
-    QSet<qint64> m_word_ids;
+    QSet<CommonWordEntry*> m_words;
 };
 
 #endif // WORDCOLLECTION_H

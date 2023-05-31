@@ -1,6 +1,7 @@
 #ifndef LANGUAGEDICTIONARY_H
 #define LANGUAGEDICTIONARY_H
 
+#include "commonwordentry.h"
 #include "wordentry.h"
 
 #include <QMap>
@@ -12,12 +13,12 @@ public:
     explicit LanguageDictionary(QObject *parent, const QString& name);
 
     const QString& getLanguageName() const;
-    void addWord(qint64 word_index, WordEntry* word_entry);
-    WordEntry* findWord(qint64 word_index);
+    void addWord(CommonWordEntry* word_common_entry, WordEntry* word_entry);
+    WordEntry* findWord(CommonWordEntry* word_common_entry);
 
 private:
     QString m_language_name;
-    QMap<qint64, WordEntry*> m_words;
+    QMap<CommonWordEntry*, WordEntry*> m_words;
 
 signals:
 

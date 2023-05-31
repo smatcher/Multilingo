@@ -5,14 +5,14 @@
 
 #include "wordentrywidget.h"
 
-AddWordWindow::AddWordWindow(QWidget *parent, DatabaseContent* database_content)
+AddWordWindow::AddWordWindow(QWidget *parent, DictionaryModel* dictionary_model)
     : QDialog(parent)
     , ui(new Ui::AddWordWindow)
-    , m_database_content(database_content)
+    , m_dictionary_model(dictionary_model)
 {
     ui->setupUi(this);
 
-    auto& database_languages = m_database_content->getLanguages();
+    const auto& database_languages = m_dictionary_model->languages();
 
     m_word_entries.reserve(database_languages.count());
     m_common_word_entry = new CommonWordEntry(this);
@@ -35,7 +35,7 @@ AddWordWindow::~AddWordWindow()
 
 void AddWordWindow::accept()
 {
-    auto& database_languages = m_database_content->getLanguages();
+    const auto& database_languages = m_dictionary_model->languages();
 
     bool has_any_data = false;
     for (int language_index = 0; language_index < database_languages.count(); ++language_index)
@@ -52,18 +52,17 @@ void AddWordWindow::accept()
 
     if (has_any_data)
     {
-        qint64 word_index = m_database_content->addWord(m_common_word_entry);
+        QMap<int, WordEntry*> translated_words;
         for (int language_index = 0; language_index < database_languages.count(); ++language_index)
         {
             WordEntry* word_entry = m_word_entries[language_index];
-
-            if (!word_entry->hasData())
-                continue;
-
-            m_database_content->getLanguages()[language_index]->addWord(word_index, word_entry);
+            if (word_entry->hasData())
+            {
+                translated_words.insert(language_index, word_entry);
+            }
         }
 
-        m_database_content->touch();
+        m_dictionary_model->addWord(m_common_word_entry, translated_words);
     }
 
     QDialog::accept();

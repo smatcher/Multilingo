@@ -12,15 +12,15 @@ const QString& LanguageDictionary::getLanguageName() const
     return m_language_name;
 }
 
-void LanguageDictionary::addWord(qint64 word_index, WordEntry* word_entry)
+void LanguageDictionary::addWord(CommonWordEntry* word_common_entry, WordEntry* word_entry)
 {
-    m_words.insert(word_index, word_entry);
+    m_words.insert(word_common_entry, word_entry);
     word_entry->setParent(this);
 }
 
-WordEntry* LanguageDictionary::findWord(qint64 word_index)
+WordEntry* LanguageDictionary::findWord(CommonWordEntry* word_common_entry)
 {
-    auto it = m_words.find(word_index);
+    auto it = m_words.find(word_common_entry);
     if (it != m_words.end())
     {
         return it.value();

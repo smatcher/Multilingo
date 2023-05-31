@@ -50,28 +50,27 @@ MainWindow::MainWindow(QWidget *parent)
     QShortcut* removeCollectionShortcut = new QShortcut(QKeySequence(Qt::Key_Delete), ui->collectionsList);
     QObject::connect(removeCollectionShortcut, &QShortcut::activated, this, removeSelectedCollections );
 
+    DictionaryModel* dictionary_model = new DictionaryModel(this, m_database_content);
+
     ui->addWordButton->setDefaultAction(ui->actionAdd_word);
     QObject::connect(ui->actionAdd_word, &QAction::triggered,
                      this, [=](){
-                         AddWordWindow w(this, m_database_content);
+                         AddWordWindow w(this, dictionary_model);
                          w.exec();
                      });
 
     QObject::connect(ui->actionManage_languages, &QAction::triggered,
                      this, [=](){
-                        ManageLanguagesWindow w(this, m_database_content);
+                        ManageLanguagesWindow w(this, dictionary_model);
                         w.exec();
                     });
 
     QObject::connect(ui->actionSave, &QAction::triggered, this, &MainWindow::saveDatabase);
     QObject::connect(ui->actionExit, &QAction::triggered, this, &QMainWindow::close);
 
-    DictionaryModel* dictionary_model = new DictionaryModel(this, m_database_content);
     ui->wordsTable->setModel(dictionary_model);
 
-    QObject::connect(m_database_content, &DatabaseContent::touched, dictionary_model, &DictionaryModel::tempInvalidate);
-
-    if (m_database_content->getLanguages().isEmpty()) {
+    if (dictionary_model->languages().isEmpty()) {
         ui->actionManage_languages->trigger();
     }
 }
@@ -83,8 +82,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::saveDatabase()
 {
-    qDebug("TODO: save");
-    m_database_content->untouch();
+    m_database_content->save();
 }
 
 void MainWindow::closeEvent(QCloseEvent* event)

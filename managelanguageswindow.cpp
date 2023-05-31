@@ -7,14 +7,14 @@
 #include <QMessageBox>
 #include <QShortcut>
 
-ManageLanguagesWindow::ManageLanguagesWindow(QWidget *parent, DatabaseContent* database_content)
+ManageLanguagesWindow::ManageLanguagesWindow(QWidget *parent, DictionaryModel* dictionary_model)
     : QDialog(parent)
     , ui(new Ui::ManageLanguagesWindow)
-    , m_database_content(database_content)
+    , m_dictionary_model(dictionary_model)
 {
     ui->setupUi(this);
 
-    const QList<LanguageDictionary*>& database_languages = m_database_content->getLanguages();
+    const QList<LanguageDictionary*>& database_languages = m_dictionary_model->languages();
 
     m_language_list_model = new QStringListModel(this);
     QStringList initial_languages;
@@ -77,7 +77,7 @@ ManageLanguagesWindow::~ManageLanguagesWindow()
 
 void ManageLanguagesWindow::accept()
 {
-    QList<LanguageDictionary*>& database_languages = m_database_content->getLanguages();
+    const QList<LanguageDictionary*>& database_languages = m_dictionary_model->languages();
 
     QStringList new_language_list = m_language_list_model->stringList();
     QStringList added_languages;
@@ -116,7 +116,6 @@ void ManageLanguagesWindow::accept()
         }
     }
 
-    bool touch_db = false;
     if (!removed_languages.isEmpty())
     {
         QString question = "You are about to delete the following languages:";
@@ -136,21 +135,14 @@ void ManageLanguagesWindow::accept()
         // follow through, let's remove things
         for (const auto& language_to_remove : removed_languages)
         {
-            database_languages.removeAll(language_to_remove);
-            delete language_to_remove;
+            m_dictionary_model->removeLanguage(language_to_remove);
         }
-        touch_db = true;
     }
 
     for (const auto& language : added_languages)
     {
         int index = new_language_list.indexOf(language);
-        database_languages.insert(index, new LanguageDictionary(m_database_content, language));
-        touch_db = true;
-    }
-
-    if (touch_db) {
-        m_database_content->touch();
+        m_dictionary_model->addLanguage(index, language);
     }
 
     QDialog::accept();

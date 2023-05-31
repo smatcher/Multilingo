@@ -33,8 +33,6 @@ set(PROJECT_SOURCES
         languagedictionary.cpp
         wordcollectionmodel.h
         wordcollectionmodel.cpp
-        wordsmodel.h
-        wordsmodel.cpp
         wordentrywidget.h
         wordentrywidget.cpp
         wordentrywidget.ui

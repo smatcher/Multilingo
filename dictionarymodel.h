@@ -17,8 +17,13 @@ class DictionaryModel : public QAbstractTableModel
 public:
     explicit DictionaryModel(QObject *parent, DatabaseContent* database_content);
 
-public slots:
-    void tempInvalidate();
+    const QList<LanguageDictionary*>& languages() const;
+    const QList<WordCollection*>& collections() const;
+
+    void addWord(CommonWordEntry* word_entry, const QMap<int, WordEntry*>& translated_words);
+
+    void addLanguage(int index, const QString& language);
+    void removeLanguage(LanguageDictionary* language);
 
 private:
     DatabaseContent* m_database_content;
