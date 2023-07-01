@@ -5,8 +5,8 @@
 #include "commonwordentry.h"
 #include "wordcollection.h"
 
+#include <QJsonObject>
 #include <QList>
-#include <QMap>
 
 class DatabaseContent : public QObject
 {
@@ -19,6 +19,7 @@ public:
     bool isTouched();
 
     void save();
+    void load();
 
 private:
     friend class DictionaryModel;
@@ -29,6 +30,8 @@ private:
     QList<WordCollection*>& collections();
     QList<LanguageDictionary*>& languages();
     QList<CommonWordEntry*>& words();
+
+    void load_v1(QJsonObject& json_object);
 
 signals:
     void touched();

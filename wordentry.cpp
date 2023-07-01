@@ -46,3 +46,12 @@ QString WordEntry::toString() const
 
     return QString("%1 (%2)").arg(m_value, m_disambiguation);
 }
+
+QJsonObject WordEntry::save() const
+{
+    QJsonObject json_object;
+    json_object["value"] = m_value;
+    json_object["disambiguation"] = m_disambiguation;
+    json_object["details"] = m_details;
+    return json_object;
+}

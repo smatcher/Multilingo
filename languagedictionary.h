@@ -4,7 +4,7 @@
 #include "commonwordentry.h"
 #include "wordentry.h"
 
-#include <QMap>
+#include <QHash>
 
 class LanguageDictionary : public QObject
 {
@@ -16,9 +16,11 @@ public:
     void addWord(CommonWordEntry* word_common_entry, WordEntry* word_entry);
     WordEntry* findWord(CommonWordEntry* word_common_entry);
 
+    QJsonObject save(const QHash<const CommonWordEntry*, int>& word_indices) const;
+
 private:
     QString m_language_name;
-    QMap<CommonWordEntry*, WordEntry*> m_words;
+    QHash<CommonWordEntry*, WordEntry*> m_words;
 
 signals:
 

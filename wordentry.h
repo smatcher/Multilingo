@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QString>
+#include <QJsonObject>
 
 class WordEntry : public QObject
 {
@@ -22,6 +23,8 @@ public:
     const QString& details() const;
 
     QString toString() const;
+
+    QJsonObject save() const;
 
 private:
     QString m_value;

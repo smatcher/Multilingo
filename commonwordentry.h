@@ -2,6 +2,7 @@
 #define COMMONWORDENTRY_H
 
 #include <QObject>
+#include <QJsonObject>
 
 enum class WordType {
     None,
@@ -20,6 +21,8 @@ public:
 
     void setType(WordType type_);
     WordType type();
+
+    QJsonObject save() const;
 
 private:
     WordType m_type;

@@ -6,6 +6,7 @@
 #include <QObject>
 #include <QString>
 #include <QSet>
+#include <QJsonObject>
 
 class WordCollection : public QObject
 {
@@ -14,6 +15,8 @@ public:
     explicit WordCollection(QObject *parent, const QString& name);
 
     const QString& getName() const;
+
+    QJsonObject save(const QHash<const CommonWordEntry*, int>& word_indices) const;
 
 private:
     QString m_name;
