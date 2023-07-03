@@ -23,3 +23,10 @@ QJsonObject CommonWordEntry::save() const
     json_object["type"] = int(m_type);
     return json_object;
 }
+
+CommonWordEntry* CommonWordEntry::load_v1(const QJsonObject& json_object, QObject* parent)
+{
+    CommonWordEntry* word_entry = new CommonWordEntry(parent);
+    word_entry->m_type = static_cast<WordType>(json_object["type"].toInt());
+    return word_entry;
+}

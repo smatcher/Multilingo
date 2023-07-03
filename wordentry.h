@@ -5,6 +5,8 @@
 #include <QString>
 #include <QJsonObject>
 
+class CommonWordEntry;
+
 class WordEntry : public QObject
 {
     Q_OBJECT
@@ -25,6 +27,7 @@ public:
     QString toString() const;
 
     QJsonObject save() const;
+    static WordEntry* load_v1(const QJsonObject& json_object, QObject* parent, const QList<CommonWordEntry*>& words);
 
 private:
     QString m_value;

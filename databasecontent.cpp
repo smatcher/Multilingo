@@ -52,11 +52,14 @@ void DatabaseContent::addWord(CommonWordEntry* common_word_entry)
     touch();
 }
 
+static const QString k_database_filename = "multilingo.json";
+static const int k_current_version = 1;
+
 void DatabaseContent::save()
 {    
     QJsonObject json_object;
 
-    json_object["version"] = 1;
+    json_object["version"] = k_current_version;
 
     QJsonArray json_words;
     QHash<const CommonWordEntry*, int> word_indices;
@@ -84,7 +87,7 @@ void DatabaseContent::save()
         file_location.mkdir(".");
     }
 
-    QFile file(file_location.filePath("multilingo.json"));
+    QFile file(file_location.filePath(k_database_filename));
 
     if (!file.open(QIODevice::WriteOnly)) {
         qWarning("Couldn't save file");
@@ -99,10 +102,42 @@ void DatabaseContent::save()
 
 void DatabaseContent::load()
 {
+    QDir file_location = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation);
+    QFile file(file_location.filePath(k_database_filename));
 
+    if (!file.open(QIODevice::ReadOnly)) {
+        qWarning("Couldn't load file");
+        return;
+    }
+
+    QJsonDocument json_doc = QJsonDocument::fromJson(file.readAll());
+    QJsonObject json_object = json_doc.object();
+
+    int version = json_object["version"].toInt();
+
+    if (version == 1) {
+        load_v1(json_object);
+    }
 }
 
 void DatabaseContent::load_v1(QJsonObject& json_object)
 {
+    m_words.clear();
+    m_collections.clear();
+    m_languages.clear();
 
+    QJsonArray json_words = json_object["words"].toArray();
+    for (const auto& json_word : json_words) {
+        m_words.append(CommonWordEntry::load_v1(json_word.toObject(), this));
+    }
+
+    QJsonArray json_collections = json_object["collections"].toArray();
+    for (const auto& json_collection : json_collections) {
+        m_collections.append(WordCollection::load_v1(json_collection.toObject(), this, m_words));
+    }
+
+    QJsonArray json_dictionaries = json_object["dictionaries"].toArray();
+    for (const auto& json_dictionary : json_dictionaries) {
+        m_languages.append(LanguageDictionary::load_v1(json_dictionary.toObject(), this, m_words));
+    }
 }

@@ -54,3 +54,16 @@ QJsonObject LanguageDictionary::save(const QHash<const CommonWordEntry*, int>& w
 
     return json_object;
 }
+
+LanguageDictionary* LanguageDictionary::load_v1(const QJsonObject& json_object, QObject* parent, const QList<CommonWordEntry*>& words)
+{
+    LanguageDictionary* language_dictionary = new LanguageDictionary(parent, json_object["name"].toString());
+    QJsonArray json_words = json_object["words"].toArray();
+    for (int word_index=0; word_index<json_words.count(); ++word_index) {
+        const auto& json_word = json_words[word_index];
+        if (json_word.isObject()) {
+            language_dictionary->m_words.insert(words[word_index], WordEntry::load_v1(json_word.toObject(), parent, words));
+        }
+    }
+    return language_dictionary;
+}

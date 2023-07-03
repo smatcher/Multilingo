@@ -17,6 +17,7 @@ public:
     const QString& getName() const;
 
     QJsonObject save(const QHash<const CommonWordEntry*, int>& word_indices) const;
+    static WordCollection* load_v1(const QJsonObject& json_object, QObject* parent, const QList<CommonWordEntry*>& words);
 
 private:
     QString m_name;

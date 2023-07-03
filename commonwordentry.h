@@ -23,6 +23,7 @@ public:
     WordType type();
 
     QJsonObject save() const;
+    static CommonWordEntry* load_v1(const QJsonObject& json_object, QObject* parent);
 
 private:
     WordType m_type;

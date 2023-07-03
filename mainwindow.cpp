@@ -18,7 +18,8 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
     m_database_content = new DatabaseContent(this);
-    
+    m_database_content->load();
+
     WordCollectionModel* collections_model = new WordCollectionModel(this, m_database_content);
 
     auto addCollection = [=]() {

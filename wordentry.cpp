@@ -55,3 +55,12 @@ QJsonObject WordEntry::save() const
     json_object["details"] = m_details;
     return json_object;
 }
+
+WordEntry* WordEntry::load_v1(const QJsonObject& json_object, QObject* parent, const QList<CommonWordEntry*>& words)
+{
+    WordEntry* word_entry = new WordEntry(parent);
+    word_entry->m_value = json_object["value"].toString();
+    word_entry->m_disambiguation = json_object["disambiguation"].toString();
+    word_entry->m_details = json_object["details"].toString();
+    return word_entry;
+}

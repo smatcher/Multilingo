@@ -27,3 +27,14 @@ QJsonObject WordCollection::save(const QHash<const CommonWordEntry*, int>& word_
 
     return json_object;
 }
+
+WordCollection* WordCollection::load_v1(const QJsonObject& json_object, QObject* parent, const QList<CommonWordEntry*>& words)
+{
+    WordCollection* word_collection = new WordCollection(parent, json_object["name"].toString());
+    QJsonArray json_word_indices = json_object["words"].toArray();
+    for (const auto& json_word_index : json_word_indices) {
+        int word_index = json_word_index.toInt();
+        word_collection->m_words.insert(words[word_index]);
+    }
+    return word_collection;
+}

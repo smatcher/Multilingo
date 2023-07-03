@@ -17,6 +17,7 @@ public:
     WordEntry* findWord(CommonWordEntry* word_common_entry);
 
     QJsonObject save(const QHash<const CommonWordEntry*, int>& word_indices) const;
+    static LanguageDictionary* load_v1(const QJsonObject& json_object, QObject* parent, const QList<CommonWordEntry*>& words);
 
 private:
     QString m_language_name;

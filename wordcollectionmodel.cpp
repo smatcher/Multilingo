@@ -35,7 +35,7 @@ void WordCollectionModel::addCollection(QString collectionName)
     auto& collections = m_database_content->collections();
 
     beginInsertRows(QModelIndex(), collections.count(), collections.count());
-    collections.push_back(new WordCollection(parent(), collectionName));
+    collections.push_back(new WordCollection(m_database_content, collectionName));
     endInsertRows();
 
     m_database_content->touch();
